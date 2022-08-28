@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\Inventory;
 
 class InventoryController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -18,13 +14,27 @@ class InventoryController extends Controller
 
     public function index()
     {
-      $employees = Employee::all();
+      $employees = Inventory::all();
 
       return response()->json([
-        'message' => 'Employees List',
+        'message' => 'Inventories List',
         'data' => $employees
       ], 200);
     }
 
-    //
+    public function show($id)
+    {
+      $inventory = Inventory::whereId($id)->first();
+
+      return response()->json([
+        'message' => 'Data Inventory by ID',
+        'data' => $inventory
+      ], 200);
+    }
+    
+
+    public function create()
+    {
+      
+    }
 }

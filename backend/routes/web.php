@@ -22,12 +22,20 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->post('/login', 'AuthController@login');
-    
+
     $router->group(['prefix' => 'employees'], function () use ($router) {
         $router->get('/index', 'EmployeeController@index');
+        $router->get('/detail/{id}', 'EmployeeController@show');
         $router->post('/create', 'EmployeeController@create');
+        $router->put('/update/{id}', 'EmployeeController@update');
+        $router->delete('/delete/{id}', 'EmployeeController@delete');
     });
+
     $router->group(['prefix' => 'inventory'], function () use ($router) {
         $router->get('/index', 'InventoryController@index');
+        $router->get('/detail/{id}', 'InventoryController@show');
+        $router->post('/create', 'InventoryController@create');
+        $router->put('/update/{id}', 'InventoryController@update');
+        $router->delete('/delete/{id}', 'InventoryController@delete');
     });
 });

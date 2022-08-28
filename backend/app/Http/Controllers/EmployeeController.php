@@ -23,6 +23,16 @@ class EmployeeController extends Controller
       ], 200);
     }
 
+    public function show($id)
+    {
+      $employee = Employee::whereId($id)->first();
+
+      return response()->json([
+        'message' => 'Data Employee by ID',
+        'data' => $employee
+      ], 200);
+    }
+
     public function create(Request $request)
     {
       $this->validate($request, [
@@ -58,7 +68,7 @@ class EmployeeController extends Controller
 
       $this->validate($request, [
         'name' => ['required', 'max:32'],
-        'username' => ['required', 'max:16'],
+        'username' => ['required', 'unique', 'max:16'],
         'password' => ['required', 'min:6']
       ]);
 
@@ -71,6 +81,15 @@ class EmployeeController extends Controller
       return response()->json([
         'message' => 'Data updated successfully'
       ], 201);
-      
+    }
+
+    public function delete($id)
+    {
+      $employee = Employee::whereId($id)->first();
+      $employee->delete();
+
+      return response()->json([
+        'message' => 'Data deleted successfully'
+      ], 200);
     }
 }
