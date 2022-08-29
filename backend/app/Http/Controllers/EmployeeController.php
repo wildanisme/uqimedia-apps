@@ -10,7 +10,7 @@ class EmployeeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     public function index()
@@ -92,4 +92,5 @@ class EmployeeController extends Controller
         'message' => 'Data deleted successfully'
       ], 200);
     }
+
 }

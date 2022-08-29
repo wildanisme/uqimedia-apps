@@ -8,6 +8,6 @@ class Inventory extends Model
 {
     protected $table = 'inventories';
     protected $fillable = [
-        'name', 'detail', 'price', 'status'
+        'name', 'detail', 'price', 'location', 'status'
     ];
 }

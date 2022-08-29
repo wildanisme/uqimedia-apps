@@ -5,7 +5,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class EmployeeController extends Controller
+class AuthController extends Controller
 {
 
     public function __construct()
@@ -42,5 +42,24 @@ class EmployeeController extends Controller
           'message' => 'Login Success',
           'data' => $employee
         ], 200);
+    }
+
+    public function logout($id)
+    {
+        $loggedIn = Employee::whereId($id)->first();
+        if($loggedIn['token'] = null)
+        {
+            return response()->json([
+                'message' => 'Anda belum login'
+            ]);
+        }
+        $loggedIn->update([
+            'token' => null
+        ]);
+
+        return response()->json([
+            'message' => 'Logout success'
+        ], 200);
+
     }
 }

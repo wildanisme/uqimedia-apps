@@ -22,6 +22,7 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->post('/login', 'AuthController@login');
+    $router->post('/logout/{id}', 'AuthController@logout');
 
     $router->group(['prefix' => 'employees'], function () use ($router) {
         $router->get('/index', 'EmployeeController@index');
