@@ -29,10 +29,10 @@
     mounted() {
       
       //fething ke Rest API 
-      this.$axios.get('/employees/index')
+      this.$axios.get('/employees')
         .then(response => {
           //assign response ke state "employees"
-          this.employees = response.data.data
+          this.employees = response.data.employees
 
         })
         .catch(error => {

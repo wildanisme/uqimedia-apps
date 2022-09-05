@@ -16,21 +16,29 @@ class InventoryController extends Controller
 
     public function index()
     {
-      $employees = Inventory::all();
+      $inventories = Inventory::all();
 
       return response()->json([
         'message' => 'Inventories List',
-        'data' => $employees
+        'status' => 'success',
+        'inventories' => $inventories
       ], 200);
     }
 
     public function show($id)
     {
-      $inventory = Inventory::whereId($id)->first();
+      $inventory = Inventory::find($id);
+
+      if(!$inventory){
+        return response()->json([
+          'message' => 'Data not found'
+        ], 404);
+      }
 
       return response()->json([
-        'message' => 'Data Inventory by ID',
-        'data' => $inventory
+        'message' => 'Detail Inventory',
+        'status' => 'success',
+        'inventory' => $inventory
       ], 200);
     }
     
@@ -58,9 +66,40 @@ class InventoryController extends Controller
       ], 201);
     }
 
+    public function update(Request $request, $id)
+    {
+      $inventory = Inventory::find($id);
+
+      if(!$inventory){
+        return response()->json([
+          'message' => 'Data not found'
+        ], 404);
+      }
+
+      $this->validate($request, [
+        'name' => ['required'],
+        'detail' => ['nullable'],
+        'price' => ['numeric'],
+        'location' => ['nullable'],
+        'status' => ['nullable'],
+      ]);
+
+      $inventory->update([
+        'name' => $request->input('name'),
+        'detail' => $request->input('detail'),
+        'price' => $request->input('price'),
+        'location' => $request->input('location'),
+        'status' => $request->input('status'),
+      ]);
+
+      return response()->json([
+        'message' => 'Data Updated Successfully'
+      ], 200);
+    }
+
     public function delete($id)
     {
-      $inventory = Inventory::whereId($id)->first();
+      $inventory = Inventory::find($id);
       $inventory->delete();
 
       return response()->json([

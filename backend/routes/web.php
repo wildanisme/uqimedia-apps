@@ -25,7 +25,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/logout/{id}', 'AuthController@logout');
 
     $router->group(['prefix' => 'employees'], function () use ($router) {
-        $router->get('/index', 'EmployeeController@index');
+        $router->get('/', 'EmployeeController@index');
         $router->get('/detail/{id}', 'EmployeeController@show');
         $router->post('/create', 'EmployeeController@create');
         $router->put('/update/{id}', 'EmployeeController@update');
@@ -33,10 +33,18 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     $router->group(['prefix' => 'inventory'], function () use ($router) {
-        $router->get('/index', 'InventoryController@index');
+        $router->get('/', 'InventoryController@index');
         $router->get('/detail/{id}', 'InventoryController@show');
         $router->post('/create', 'InventoryController@create');
         $router->put('/update/{id}', 'InventoryController@update');
         $router->delete('/delete/{id}', 'InventoryController@delete');
+    });
+
+    $router->group(['prefix' => 'product'], function () use ($router) {
+        $router->get('/', 'ProductController@index');
+        $router->get('/detail/{id}', 'ProductController@show');
+        $router->post('/create', 'ProductController@create');
+        $router->put('/update/{id}', 'ProductController@update');
+        $router->delete('/delete/{id}', 'ProductController@delete');
     });
 });

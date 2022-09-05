@@ -19,17 +19,24 @@ class EmployeeController extends Controller
 
       return response()->json([
         'message' => 'Employees List',
-        'data' => $employees
+        'status' => 'success',
+        'employees' => $employees
       ], 200);
     }
 
     public function show($id)
     {
-      $employee = Employee::whereId($id)->first();
+      $employee = Employee::find($id);
+      if(!$employee){
+        return response()->json([
+          'message' => 'Data not found',
+        ], 404);
+      }
 
       return response()->json([
-        'message' => 'Data Employee by ID',
-        'data' => $employee
+        'message' => 'Data Employee',
+        'status' => 'success',
+        'employees' => $employee
       ], 200);
     }
 
@@ -45,7 +52,7 @@ class EmployeeController extends Controller
       $username = $request->input('username');
       $password = Hash::make($request->input('password'));
 
-      $employee = Employee::create([
+      Employee::create([
         'name' => $name,
         'username' => $username,
         'password' => $password,
@@ -58,7 +65,7 @@ class EmployeeController extends Controller
 
     public function update(Request $request, $id)
     {
-      $employee = Employee::whereId($id);
+      $employee = Employee::find($id);
 
       if(!$employee){
         return response()->json([
@@ -85,7 +92,7 @@ class EmployeeController extends Controller
 
     public function delete($id)
     {
-      $employee = Employee::whereId($id)->first();
+      $employee = Employee::find($id);
       $employee->delete();
 
       return response()->json([
